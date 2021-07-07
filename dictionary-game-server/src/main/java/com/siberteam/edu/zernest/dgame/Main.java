@@ -34,7 +34,8 @@ public class Main {
             List<String> dictionary = reader.getDictionary(dictionaryInputStream,
                     parser.getWordsCount() * parser.getClientsCount());
 
-            GameServer server = new GameServer(dictionary, parser.getPort(), parser.getClientsCount());
+            GameServer server = new GameServer(dictionary, parser.getPort(),
+                    parser.getClientsCount(), parser.getWordsCount());
 
             server.startServer();
         } catch (Exception e) {

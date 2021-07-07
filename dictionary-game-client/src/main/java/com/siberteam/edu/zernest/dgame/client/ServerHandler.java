@@ -19,8 +19,7 @@ public class ServerHandler implements Runnable, IErrorHandler {
     public void run() {
         String message;
         try {
-            readerLoop:
-            while ((message = client.getReader().readLine()) != null) {
+            while (!Thread.currentThread().isInterrupted() && (message = client.getReader().readLine()) != null) {
                 GameCommands command = GameCommands.getGameCommand(message);
                 if (command != null) {
                     clientInterface.printMessage(command.getDescription());
@@ -32,7 +31,7 @@ public class ServerHandler implements Runnable, IErrorHandler {
                             break;
                         case FINISH:
                             handleFinishCommand();
-                            break readerLoop;
+                            break;
                     }
                 } else {
                     handleWord(message);
@@ -60,6 +59,7 @@ public class ServerHandler implements Runnable, IErrorHandler {
         clientInterface.getInfoButton().setEnabled(false);
         clientInterface.printWinner();
         clientInterface.printInfo();
+        Thread.currentThread().interrupt();
         client.getSocket().close();
     }
 

@@ -23,11 +23,12 @@ public class GameServer implements ILogger {
     private final int CLIENTS_NUMBER;
     private int currentClientCounter;
 
-    public GameServer(List<String> generalDictionaryList, int port, int clientsNumber) throws IOException {
+    public GameServer(List<String> generalDictionaryList, int port, int clientsNumber,int wordsNumber)
+            throws IOException {
         CLIENTS_NUMBER = clientsNumber;
         serverSocket = new ServerSocket(port);
         clientOutputStreams = new ArrayList<>();
-        dictionariesList = ImmutableList.copyOf(Lists.partition(generalDictionaryList, clientsNumber));
+        dictionariesList = ImmutableList.copyOf(Lists.partition(generalDictionaryList, wordsNumber));
         wordsSlots = Lists.newCopyOnWriteArrayList();
         gameFinished = false;
     }
