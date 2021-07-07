@@ -20,7 +20,7 @@ public class ServerHandler implements Runnable, IErrorHandler {
     public void run() {
         String message;
         try {
-            while (!gameFinished && (message = client.getReader().readLine()) != null) {
+            while (!gameFinished && (message = client.getServerReader().readLine()) != null) {
                 GameCommands command = GameCommands.getGameCommand(message);
                 if (command != null) {
                     clientInterface.printMessage(command.getDescription());
@@ -68,11 +68,11 @@ public class ServerHandler implements Runnable, IErrorHandler {
         TimeUnit.MILLISECONDS.sleep(10);
 
         clientInterface.printReceivedMessage(message);
-        client.getRemainingWords().remove(message);
+        client.getRemainingWordsToWin().remove(message);
 
-        if (client.getRemainingWords().size() == 0) {
+        if (client.getRemainingWordsToWin().size() == 0) {
             client.setWinner(true);
-            client.getWriter().println(GameCommands.FINISH.getCommand());
+            client.getServerWriter().println(GameCommands.FINISH.getCommand());
         }
     }
 

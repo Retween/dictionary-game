@@ -17,9 +17,9 @@ import java.util.*;
 public class GameServer implements ILogger {
     private final ServerSocket serverSocket;
     private final List<String> wordsSlots;
+    private final List<PrintWriter> clientOutputStreams;
     private final ImmutableList<List<String>> dictionariesList;
     private final ImmutableSet<String> generalDictionarySet;
-    private final List<PrintWriter> clientOutputStreams;
     private boolean gameFinished;
     private final int CLIENTS_NUMBER;
     private int currentClientCounter;

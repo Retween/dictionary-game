@@ -18,7 +18,7 @@ public class MakeMoveButtonListener implements ActionListener {
         if (!gameClient.isMadeMove()) {
             move = gameClient.makeMove();
 
-            gameClient.getWriter().println(move);
+            gameClient.getServerWriter().println(move);
 
             gameClient.setMadeMove(true);
         }

@@ -85,7 +85,7 @@ public class ClientInterface implements IErrorHandler {
         addColoredText(incoming, "\n", Color.BLACK);
 
         addColoredText(incoming, "Remaining words to win: ", Color.BLACK);
-        for (String st : gameClient.getRemainingWords()) {
+        for (String st : gameClient.getRemainingWordsToWin()) {
             addColoredText(incoming, st + ", ", Color.RED);
         }
         addColoredText(incoming, "\n\n", Color.BLACK);

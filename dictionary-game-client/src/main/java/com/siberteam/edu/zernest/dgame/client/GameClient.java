@@ -13,10 +13,10 @@ import java.util.Set;
 
 public class GameClient implements ILogger {
     private Socket socket;
-    private PrintWriter writer;
-    private BufferedReader reader;
+    private PrintWriter serverWriter;
+    private BufferedReader serverReader;
     private ClientInterface clientInterface;
-    private Set<String> remainingWords;
+    private Set<String> remainingWordsToWin;
     private ImmutableList<String> dictionarySet;
     private ImmutableSet<String> generalDictionarySet;
     private boolean madeMove;
@@ -42,13 +42,13 @@ public class GameClient implements ILogger {
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
         dictionarySet = (ImmutableList<String>) inputStream.readObject();
         generalDictionarySet = (ImmutableSet<String>) inputStream.readObject();
-        remainingWords = new HashSet<>(generalDictionarySet);
+        remainingWordsToWin = new HashSet<>(generalDictionarySet);
     }
 
     private void setUpNetworking(String host, int port) throws IOException {
         socket = new Socket(host, port);
-        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        writer = new PrintWriter(socket.getOutputStream(), true);
+        serverReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        serverWriter = new PrintWriter(socket.getOutputStream(), true);
         log("networking established");
     }
 
@@ -61,12 +61,12 @@ public class GameClient implements ILogger {
         return socket;
     }
 
-    public BufferedReader getReader() {
-        return reader;
+    public BufferedReader getServerReader() {
+        return serverReader;
     }
 
-    public PrintWriter getWriter() {
-        return writer;
+    public PrintWriter getServerWriter() {
+        return serverWriter;
     }
 
     public boolean isMadeMove() {
@@ -81,8 +81,8 @@ public class GameClient implements ILogger {
         return dictionarySet;
     }
 
-    public Set<String> getRemainingWords() {
-        return remainingWords;
+    public Set<String> getRemainingWordsToWin() {
+        return remainingWordsToWin;
     }
 
     public int getAndIncrementRoundCounter() {
