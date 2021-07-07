@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class ServerHandler implements Runnable, IErrorHandler {
     private final GameClient client;
     private final ClientInterface clientInterface;
+    private boolean gameFinished;
 
     public ServerHandler(GameClient client) {
         this.client = client;
@@ -19,7 +20,7 @@ public class ServerHandler implements Runnable, IErrorHandler {
     public void run() {
         String message;
         try {
-            while (!Thread.currentThread().isInterrupted() && (message = client.getReader().readLine()) != null) {
+            while (!gameFinished && (message = client.getReader().readLine()) != null) {
                 GameCommands command = GameCommands.getGameCommand(message);
                 if (command != null) {
                     clientInterface.printMessage(command.getDescription());
@@ -59,7 +60,7 @@ public class ServerHandler implements Runnable, IErrorHandler {
         clientInterface.getInfoButton().setEnabled(false);
         clientInterface.printWinner();
         clientInterface.printInfo();
-        Thread.currentThread().interrupt();
+        gameFinished = true;
         client.getSocket().close();
     }
 
