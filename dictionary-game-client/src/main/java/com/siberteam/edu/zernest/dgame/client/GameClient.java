@@ -23,8 +23,8 @@ public class GameClient implements ILogger {
     private boolean winner;
     private int roundCounter;
 
-    public GameClient(String HOST, int PORT) throws IOException {
-        setUpNetworking(HOST, PORT);
+    public GameClient(String host, int port) throws IOException {
+        setUpNetworking(host, port);
     }
 
     public void startGameClient() throws IOException, ClassNotFoundException, InterruptedException {
@@ -41,7 +41,7 @@ public class GameClient implements ILogger {
     private void setUpData() throws IOException, ClassNotFoundException {
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
         dictionarySet = (ImmutableList<String>) inputStream.readObject();
-        generalDictionarySet =(ImmutableSet<String>) inputStream.readObject();
+        generalDictionarySet = (ImmutableSet<String>) inputStream.readObject();
         remainingWords = new HashSet<>(generalDictionarySet);
     }
 

@@ -23,9 +23,9 @@ public class GameServer implements ILogger {
     private final int CLIENTS_NUMBER;
     private int currentClientCounter;
 
-    public GameServer(List<String> generalDictionaryList, int PORT, int CLIENTS_NUMBER) throws IOException {
-        this.CLIENTS_NUMBER = CLIENTS_NUMBER;
-        serverSocket = new ServerSocket(PORT);
+    public GameServer(List<String> generalDictionaryList, int port, int clientsNumber) throws IOException {
+        CLIENTS_NUMBER = clientsNumber;
+        serverSocket = new ServerSocket(port);
         clientOutputStreams = new ArrayList<>();
         dictionariesList = ImmutableList.copyOf(Lists.partition(generalDictionaryList, CLIENTS_NUMBER));
         wordsSlots = Lists.newCopyOnWriteArrayList();
@@ -100,7 +100,7 @@ public class GameServer implements ILogger {
         this.gameFinished = gameFinished;
     }
 
-    public  boolean isGameFinished() {
+    public boolean isGameFinished() {
         return gameFinished;
     }
 
