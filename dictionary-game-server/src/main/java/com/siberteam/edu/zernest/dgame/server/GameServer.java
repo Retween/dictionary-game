@@ -18,19 +18,20 @@ public class GameServer implements ILogger {
     private final ServerSocket serverSocket;
     private final List<String> wordsSlots;
     private final ImmutableList<List<String>> dictionariesList;
-    private final ArrayList<PrintWriter> clientOutputStreams;
+    private final ImmutableSet<String> generalDictionarySet;
+    private final List<PrintWriter> clientOutputStreams;
     private boolean gameFinished;
     private final int CLIENTS_NUMBER;
     private int currentClientCounter;
 
-    public GameServer(List<String> generalDictionaryList, int port, int clientsNumber,int wordsNumber)
+    public GameServer(List<String> generalDictionaryList, int port, int clientsNumber, int wordsNumber)
             throws IOException {
         CLIENTS_NUMBER = clientsNumber;
         serverSocket = new ServerSocket(port);
         clientOutputStreams = new ArrayList<>();
         dictionariesList = ImmutableList.copyOf(Lists.partition(generalDictionaryList, wordsNumber));
+        generalDictionarySet = ImmutableSet.copyOf(generalDictionaryList);
         wordsSlots = Lists.newCopyOnWriteArrayList();
-        gameFinished = false;
     }
 
     public void startServer() throws IOException {
@@ -55,15 +56,9 @@ public class GameServer implements ILogger {
 
         ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         outputStream.writeObject(getClientDictionary());
-        outputStream.writeObject(getSetFromDictionariesList(dictionariesList));
+        outputStream.writeObject(generalDictionarySet);
 
         writer.println(GameCommands.WAITING.getCommand());
-    }
-
-    private ImmutableSet<String> getSetFromDictionariesList(List<List<String>> listOfLists) {
-        Set<String> mutableSet = new HashSet<>();
-        listOfLists.forEach(mutableSet::addAll);
-        return ImmutableSet.copyOf(mutableSet);
     }
 
     private void startGameProcess() {

@@ -32,9 +32,9 @@ public class GameClient implements ILogger {
 
         setUpData();
 
-        Thread listenerThread = new Thread(new ServerHandler(this));
-        listenerThread.start();
-        listenerThread.join();
+        Thread serverHandler = new Thread(new ServerHandler(this));
+        serverHandler.start();
+        serverHandler.join();
     }
 
     @SuppressWarnings("unchecked")
