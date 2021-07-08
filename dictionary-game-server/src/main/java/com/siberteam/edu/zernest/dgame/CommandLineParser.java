@@ -3,7 +3,7 @@ package com.siberteam.edu.zernest.dgame;
 import org.apache.commons.cli.*;
 
 public class CommandLineParser {
-    private final static Options options = new Options();
+    private static final Options options = new Options();
     private int port;
     private int wordsCount;
     private int clientsCount;

@@ -5,7 +5,7 @@ import org.apache.commons.cli.*;
 import java.io.File;
 
 public class CommandLineParser {
-    private final static Options options = new Options();
+    private static final Options options = new Options();
     private File outputFile;
     private String host;
     private int port;

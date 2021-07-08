@@ -20,9 +20,9 @@ public class GameServer implements ILogger {
     private final List<PrintWriter> clientOutputStreams;
     private final ImmutableList<List<String>> dictionariesList;
     private final ImmutableSet<String> generalDictionarySet;
-    private boolean gameFinished;
     private final int CLIENTS_NUMBER;
     private int currentClientCounter;
+    private boolean gameFinished;
 
     public GameServer(List<String> generalDictionaryList, int port, int clientsNumber, int wordsNumber)
             throws IOException {
